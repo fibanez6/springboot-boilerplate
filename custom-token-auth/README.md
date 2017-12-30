@@ -6,7 +6,6 @@
 * GIT
 
 ### Installation
-
 ```
   > git pull git@github.com:fibanez6/spring4-boilerplate.git
   > cd springBoot-Jpa-CustomTokenAuth

@@ -2,7 +2,7 @@
 
 ### REQUIREMENTS
 * Java 8
-* Maven
+* Maven 3.5.2 or higher
 * GIT
 
 ### Installation

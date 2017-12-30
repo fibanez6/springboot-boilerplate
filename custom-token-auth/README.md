@@ -52,7 +52,16 @@ While most users identify Swagger by the Swagger UI tool, the Swagger toolset in
 
 ### Spring Boot configuration
 ```
-server.port = 8080
+server.port = ${port:8080}
+
+###
+#   Actuator
+###
+management.port=8081
+management.address=127.0.0.1
+management.info.git.mode=full
+management.security.enabled=false
+management.context-path=/manage
 
 ###
 #   Database Settings
@@ -89,3 +98,39 @@ spring.jpa.properties.hibernate.format_sql=true
 * **spring.jpa.hibernate.ddl-auto**: hibernates also tries to initialize the database. 
 When it detects an embedded database, it sets ddl-auto to create-drop and initialize the database with entities annotated with @Table (and also looks for imports.sql). 
 This may lead to creating the same table twice. I prefer to stick with Spring Boot magic, so I set this to none
+
+### END POINTS
+```
+[8080]
+[/reporting/network_a/{account_id}/{app_id}/{date}],methods=[POST],produces=[application/json]
+[/reporting/network_b/{date}/{account_id}/{app_id}],methods=[POST],produces=[text/plain]
+[/v2/api-docs],methods=[GET],produces=[application/json || application/hal+json]
+[/swagger-resources]
+[/swagger-resources/configuration/security]
+[/swagger-resources/configuration/ui]
+[/error],produces=[text/html]
+[/swagger-ui.html]
+
+```
+```
+[8081]
+[/manage/autoconfig || /manage/autoconfig.json],methods=[GET],produces=[application/vnd.spring-boot.actuator.v1+json || application/json]
+[/manage/trace || /manage/trace.json],methods=[GET],produces=[application/vnd.spring-boot.actuator.v1+json || application/json]
+[/manage/loggers/{name:.*}],methods=[GET],produces=[application/vnd.spring-boot.actuator.v1+json || application/json]
+[/manage/loggers/{name:.*}],methods=[POST],consumes=[application/vnd.spring-boot.actuator.v1+json || application/json],produces=[application/vnd.spring-boot.actuator.v1+json || application/json]
+[/manage/loggers || /manage/loggers.json],methods=[GET],produces=[application/vnd.spring-boot.actuator.v1+json || application/json]
+[/manage/mappings || /manage/mappings.json],methods=[GET],produces=[application/vnd.spring-boot.actuator.v1+json || application/json]
+[/manage/heapdump || /manage/heapdump.json],methods=[GET],produces=[application/octet-stream]
+[/manage/configprops || /manage/configprops.json],methods=[GET],produces=[application/vnd.spring-boot.actuator.v1+json || application/json]
+[/manage/metrics/{name:.*}],methods=[GET],produces=[application/vnd.spring-boot.actuator.v1+json || application/json]
+[/manage/metrics || /manage/metrics.json],methods=[GET],produces=[application/vnd.spring-boot.actuator.v1+json || application/json]
+[/manage/health || /manage/health.json],methods=[GET],produces=[application/vnd.spring-boot.actuator.v1+json || application/json]
+[/manage/beans || /manage/beans.json],methods=[GET],produces=[application/vnd.spring-boot.actuator.v1+json || application/json]
+[/manage/info || /manage/info.json],methods=[GET],produces=[application/vnd.spring-boot.actuator.v1+json || application/json]
+[/manage/auditevents || /manage/auditevents.json],methods=[GET],produces=[application/vnd.spring-boot.actuator.v1+json || application/json]
+[/manage/dump || /manage/dump.json],methods=[GET],produces=[application/vnd.spring-boot.actuator.v1+json || application/json]
+[/manage/env/{name:.*}],methods=[GET],produces=[application/vnd.spring-boot.actuator.v1+json || application/json]
+[/manage/env || /manage/env.json],methods=[GET],produces=[application/vnd.spring-boot.actuator.v1+json || application/json]
+
+
+```
